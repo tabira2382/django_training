@@ -19,7 +19,7 @@
     {% for item in object_list %}
     <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ item.title }}</li>
-        <h6>コメント数</h6><small>{{ item.comment_number }}</small>
+        <h6>コメント数</h6><small>{{ item.Post_comment.comment.count }}</a></small>
     </ul>
     {% endfor %}　
 </div>
