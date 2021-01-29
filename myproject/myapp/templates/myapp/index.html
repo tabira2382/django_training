@@ -1,15 +1,37 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
-{% for item in object_list %}
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">
-        <a href="{% url 'myapp:detail' item.pk %}">{{ item.title }}</a></li>
-    <h6>コメント数</a>&nbsp;<small>[&nbsp;{{ item.post_comment_set.count|default:0}}&nbsp;]</small></h6>
-</ul>
-{% endfor %}　
-</div>
+<body>
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+        掲示板
+    </div>
+    {% for item in post_list %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <a href="{% url 'myapp:detail' item.pk %}">{{ item.title }}</a></li>
+        <h6>コメント数</a>&nbsp;<small>[&nbsp;{{ item.post_comment_set.count|default:0}}&nbsp;]</small></h6>
+    </ul>
+    {% endfor %}　
 
-{% endblock %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+
+    {% endblock %}
 
 

@@ -1,6 +1,6 @@
-{% extends 'myapp/base.html' %}
-
-{% block content %}
-{
-
-{% endblock %}
+<div class="jumbotron">
+    <h1>コメント欄</h1>
+    {% for item in post.post_comment_set.all %}
+    <h2>{{ item.comment}}</h2>
+    {% endfor%}
+</div>

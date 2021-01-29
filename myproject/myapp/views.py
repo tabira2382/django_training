@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 
-from .models import Post, Post_comment
+from .models import Post
 
 
 class Index(ListView):
@@ -11,4 +11,4 @@ class Index(ListView):
 
 class Detail(DetailView):
     template_name = 'myapp/detail.html'
-    model = Post_comment
+    model = Post
