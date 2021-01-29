@@ -6,8 +6,12 @@
     <h1>コメント欄</h1>
 </div>
 {% for item in post.post_comment_set.all %}
-<h2>{{ item.comment}}</h2>
-<p>({{ item.created_at | date:"Y/m/d H:i:s" }})</p>
+<div class="form-floating">
+    <label for="floatingTextarea2"><h2>{{ item.comment }}</h2>
+        <p>({{ item.created_at | date:"Y/m/d H:i:s" }})</p></label>
+    <textarea class="form-control" placeholder="{{ item.comment }}に投稿" id="floatingTextarea2"
+              style="height: 100px"></textarea>
+</div>
 {% endfor %}
 </div>
 
