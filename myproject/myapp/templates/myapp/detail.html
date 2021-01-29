@@ -1,18 +1,26 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
-
-<div class="jumbotron">
-    <h1>コメント欄</h1>
-</div>
-{% for item in post.post_comment_set.all %}
-<div class="form-floating">
-    <label for="floatingTextarea2"><h2>{{ item.comment }}</h2>
-        <p>({{ item.created_at | date:"Y/m/d H:i:s" }})</p></label>
-    <textarea class="form-control" placeholder="{{ item.comment }}に投稿" id="floatingTextarea2"
-              style="height: 100px"></textarea>
-</div>
-{% endfor %}
+<div class="container">
+    <h1 class="my-5">{{post.title}}</h1>
+    <div class="form-floating">
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+        <label for="floatingTextarea">
+            <br>
+            <button type="button" class="btn btn-primary">投稿する</button>
+            <br>
+            <br>
+        </label>
+    </div>
+    {% for item in post.post_comment_set.all %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.comment}}</h5>
+            <p class="card-text">({{ item.created_at | date:"Y/m/d H:i:s" }})</p>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}
+
