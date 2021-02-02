@@ -26,7 +26,9 @@ class CommentCreate(CreateView):
     def form_valid(self, form):
         post_pk = self.kwargs['pk']
         post = get_object_or_404(Post, pk=post_pk)
+        post_comment = self.model()
         Post_comment = form.save(commit=False)
-        Post_comment.post = post
-        post.save()
+        post_comment.post = Post.objects.get(pk=post_pk)
+        post_comment.comment = Post_comment
+        post_comment.save()
         return redirect('myapp:detail', pk=post_pk)
