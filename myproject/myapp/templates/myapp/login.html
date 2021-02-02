@@ -1,0 +1,18 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<h2>loginページ</h2>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors}}
+    {% for field in form %}
+    {{ field.label }}
+    {{ field }}
+    {{ field.errors }}
+    <br>
+    {% endfor %}
+    <br>
+    <button type="submit">Login</button>
+</form>
+{% endblock %}
