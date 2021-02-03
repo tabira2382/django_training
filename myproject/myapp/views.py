@@ -1,9 +1,9 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
-from .forms import CommentForm, LoginForm
+from .forms import CommentForm
 from .models import Post, Post_comment
 
 
@@ -18,7 +18,7 @@ class Detail(DetailView):
     model = Post
 
 
-class CommentCreate(CreateView):
+class CommentCreate(LoginRequiredMixin, CreateView):
     template_name = 'myapp/post_comment_form.html'
     model = Post_comment
     form_class = CommentForm
@@ -33,8 +33,3 @@ class CommentCreate(CreateView):
         post_comment.comment = Post_comment
         post_comment.save()
         return redirect('myapp:detail', pk=post_pk)
-
-
-class Login(LoginView):
-    template_name = 'myapp/login.html'
-    form_class = LoginForm
