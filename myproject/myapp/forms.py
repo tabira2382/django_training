@@ -8,9 +8,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Post_comment
         fields = ('comment',)
-        widgets = {
-            'comment': forms.Textarea(attrs={'class': 'textarea'})
-        }
+        # widgets = {
+        #     'comment': forms.Textarea(attrs={'class': 'textarea'})
+        # }
 
 
 class LoginForm(AuthenticationForm):

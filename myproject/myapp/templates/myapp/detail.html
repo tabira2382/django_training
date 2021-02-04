@@ -4,7 +4,7 @@
 
 <h1>{{post.title}}</h1>
 <br>
-<a class="button is-primary" href="{% url 'myapp:comment_create' post.pk %}">投稿する</a>
+<a class="button is-primary" href="{% url 'myapp:create' post.pk %}">投稿する</a>
 <br>
 <br>
 
@@ -13,6 +13,7 @@
     <div class="card-body">
         <h5 class="card-title">{{ item.comment}}</h5>
         <p class="card-text">({{ item.created_at | date:"Y/m/d H:i:s" }})</p>
+        <a href="{% url 'myapp:update' item.pk %}">編集</a>
     </div>
 </div>
 {% endfor %}
