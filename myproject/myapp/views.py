@@ -1,10 +1,18 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .forms import CommentForm
 from .models import Post, Post_comment
+
+
+class OnlyMyPostMixin(UserPassesTestMixin):
+    raise_exception = True
+
+    def test_func(self):
+        post = Post_comment.objects.get(id=self.kwargs['pk'])
+        return post.author == self.request.user
 
 
 class Index(ListView):
@@ -35,7 +43,7 @@ class CommentCreate(CreateView):
         return redirect('myapp:detail', pk=post_pk)
 
 
-class CommentUpdate(LoginRequiredMixin, UpdateView):
+class CommentUpdate(OnlyMyPostMixin, UpdateView):
     template_name = 'myapp/update.html'
     model = Post_comment
     form_class = CommentForm
