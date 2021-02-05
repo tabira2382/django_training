@@ -1,18 +1,10 @@
-from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import get_object_or_404, redirect, resolve_url
-from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .forms import CommentForm
 from .models import Post, Post_comment
-
-
-class OnlyCommentMixin(UserPassesTestMixin):
-    raise_exception = True
-
-    def test_func(self):
-        post = Post
 
 
 class Index(ListView):
@@ -43,12 +35,11 @@ class CommentCreate(CreateView):
         return redirect('myapp:detail', pk=post_pk)
 
 
-class CommentUpdate(UpdateView):
-    template_name = 'myapp/post_comment_form.html'
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    template_name = 'myapp/update.html'
     model = Post_comment
     form_class = CommentForm
     success_url = reverse_lazy('myapp:detail')
 
     def get_success_url(self):
-        messages.info(self.request, 'Postを更新しました。')
-        return resolve_url('myapp:detail', pk=self.kwargs['pk'])
+        return reverse('myapp:detail', kwargs={'pk': self.object.pk})
